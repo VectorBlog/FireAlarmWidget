@@ -1,0 +1,56 @@
+body {
+    text-align: center;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    margin: 1vmin;
+}
+
+p {
+    margin: 1vmin;
+}
+
+p.countdown {
+    font-size: 50px;
+    color: #F84738;
+}
+
+p.month {
+    display: inline-block;
+    font-size: 36px;
+}
+
+div.center-table {
+    width: 300px;
+    border: solid 5px black;
+}
+
+div.center-table table,
+th,
+td {
+    margin: 0 auto;
+    text-align: left;
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 2px;
+    font-size: 24px;
+    margin-bottom: 1vmin;
+}
+
+div.left {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid #FE8C7F;
+}
+
+div.right {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid #FE8C7F;
+}
