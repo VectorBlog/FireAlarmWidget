@@ -2,6 +2,10 @@ var months = ["JANUARY", "FEBUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AU
 var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 var selectedMonth = 8;
 
+document.body.onload = () => {
+    generateCalendar();
+}
+
 function nextMonth() {
     selectedMonth++;
     if (selectedMonth > 11) {
@@ -28,10 +32,12 @@ function generateCalendar() {
         let tr = document.createElement("tr");
         for (let day = 0; day < 7; day++) {
             let td = document.createElement("td");
+            td.style.textAlign = "center";
             if (date <= days[selectedMonth]) {
                 td.textContent = date++;
                 if (Math.random() < 0.05) {
                     td.style.backgroundColor = "#F84738";
+                    td.style.fontWeight = "bold";
                     td.title = "2 alarms";
                 }
             }

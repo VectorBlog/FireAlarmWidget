@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>FIRE ALARM WIDGET</title>
+    <script src="./widget.js" async></script>
+    <link rel="stylesheet" href="./widget.css">
+    <link rel="stylesheet" href="https://static.parastorage.com/services/santa-resources/resources/viewer/user-site-fonts/v3/languages.css">
+</head>
+
+<body onload="generateCalendar();">
+    <div class="center-table">
+        <span>
+          <p class="number" id="timeSinceLast">10</p>
+          <p class="units" id="timeSinceLastUnits">Days</p>
+          <h2>Without a Fire Alarm</h2>
+        </span>
+        <span>
+            <p class="number" id="alarmCount">10</p>
+            <h2>Alarms This School Year</h2>
+        </span>
+        <a class="info-link" href="../calendar/calendar.html" target="_blank">More Details</a>
+    </div>
+</body>
+
+</html>

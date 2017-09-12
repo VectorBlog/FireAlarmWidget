@@ -1,17 +1,12 @@
-<html>
-
 <head>
-    <title>FIRE ALARM WIDGET</title>
-    <script src="./widget.js" async></script>
-    <link rel="stylesheet" href="./widget.css">
+    <title>FIRE ALARM CALENDAR</title>
+    <script src="./calendar.js" async></script>
+    <link rel="stylesheet" href="./calendar.css">
+    <link rel="stylesheet" href="https://static.parastorage.com/services/santa-resources/resources/viewer/user-site-fonts/v3/languages.css">
 </head>
 
-<body onload="generateCalendar();">
+<body>
     <div class="center-table">
-        <span>
-          <p class="countdown">10 DAYS</p>
-          <p>WITHOUT AN ALARM!</p>
-        </span>
         <div class="left" onclick="prevMonth()"></div>
         <p class="month" id="selectedMonth">SEPTEMBER</p>
         <div class="right" onclick="nextMonth()"></div>
@@ -30,5 +25,3 @@
         </table>
     </div>
 </body>
-
-</html>
