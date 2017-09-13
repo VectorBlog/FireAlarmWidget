@@ -1,17 +1,50 @@
 var months = ["JANUARY", "FEBUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 var selectedMonth = 8;
+var selectedYear = 2017;
+
+var alarms = [];
+
+function getDaysInMonth(month, year) {
+    return new Date(year, month + 1, 0).getDate();
+}
+
+function getFirstDayOfWeek(month, year) {
+    return new Date(year, month, 1).getDay();
+}
 
 document.body.onload = () => {
-    generateCalendar();
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = () => {
+        if (request.readyState == 4 && request.status == 200) {
+            let alarmList = JSON.parse(request.responseText).alarms;
+            for(let i = 0; i < alarmList.length; i++) {
+                let alarmDate = new Date(alarmList[i].timestamp);
+                if(!alarms[alarmDate.getFullYear()]){ 
+                    alarms[alarmDate.getFullYear()] = [];
+                }
+                if(!alarms[alarmDate.getFullYear()][alarmDate.getMonth()]) {
+                    alarms[alarmDate.getFullYear()][alarmDate.getMonth()] = [];
+                }
+                if(!alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()]) {
+                    alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()] = [];
+                }
+                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].push(alarmList[i]);
+            }
+
+            generateCalendar();            
+        }
+    };
+    request.open("GET", "../testdata.json"/* Enter API URL Here */, true);
+    request.send();
 };
 
 function nextMonth() {
     selectedMonth++;
     if (selectedMonth > 11) {
         selectedMonth = 0;
+        selectedYear++;
     }
-    document.getElementById("selectedMonth").textContent = months[selectedMonth];
+    document.getElementById("selectedMonth").textContent = months[selectedMonth] + " " + selectedYear;
     generateCalendar();
 }
 
@@ -19,8 +52,9 @@ function prevMonth() {
     selectedMonth--;
     if (selectedMonth < 0) {
         selectedMonth = 11;
+        selectedYear--;
     }
-    document.getElementById("selectedMonth").textContent = months[selectedMonth];
+    document.getElementById("selectedMonth").textContent = months[selectedMonth] + " " + selectedYear;
     generateCalendar();
 }
 
@@ -28,18 +62,32 @@ function generateCalendar() {
     var cal = document.getElementById("monthCalendar");
     cal.innerHTML = "";
     let date = 1;
-    for (let week = 0; week < days[selectedMonth] / 7; week++) {
+    for (let week = 0; week < (getDaysInMonth(selectedMonth, selectedYear) + getFirstDayOfWeek(selectedMonth, selectedYear)) / 7; week++) {
         let tr = document.createElement("tr");
         for (let day = 0; day < 7; day++) {
+            if (week === 0 && day === 0) {
+                for (let i = 0; i < getFirstDayOfWeek(selectedMonth, selectedYear); i++) {
+                    let td = document.createElement("td");
+                    tr.appendChild(td);
+                }
+                day = getFirstDayOfWeek(selectedMonth, selectedYear);
+            }
             let td = document.createElement("td");
             td.style.textAlign = "center";
-            if (date <= days[selectedMonth]) {
-                td.textContent = date++;
-                if (Math.random() < 0.05) {
+            if (date <= getDaysInMonth(selectedMonth, selectedYear)) {
+                td.textContent = date;
+                if (alarms && alarms[selectedYear] && alarms[selectedYear][selectedMonth] && alarms[selectedYear][selectedMonth][date]) {
                     td.style.backgroundColor = "#F84738";
                     td.style.fontWeight = "bold";
-                    td.title = "2 alarms";
+                    let count = alarms[selectedYear][selectedMonth][date].length;
+                    let hoverText = `${count} alarm${count === 1 ? '' : 's'}\n`;
+                    for(let i = 0; i < count; i++) {
+                        let alarm = alarms[selectedYear][selectedMonth][date][i];
+                        hoverText += `${new Date(alarm.timestamp)}: ${alarm.beepCount} beep${alarm.beepCount === 1 ? '' : 's'}\n`;
+                    }
+                    td.title = hoverText;
                 }
+                date++;
             }
             tr.appendChild(td);
         }

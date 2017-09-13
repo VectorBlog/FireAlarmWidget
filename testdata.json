@@ -1,4 +1,26 @@
 {
     "lastAlarm": "2017-09-13T01:20:08.000+00:00",
-    "alarmCount": 6
+    "alarmCount": 6,
+    "alarms": [
+        {
+            "timestamp": "2017-03-14T17:43:08.000+00:00",
+            "beepCount": 44
+        },
+        {
+            "timestamp": "2017-08-12T10:43:08.000+00:00",
+            "beepCount": 79
+        },
+        {
+            "timestamp": "2017-09-07T12:43:08.000+00:00",
+            "beepCount": 33
+        },
+        {
+            "timestamp": "2017-09-14T17:43:08.000+00:00",
+            "beepCount": 54
+        },
+        {
+            "timestamp": "2017-09-14T19:40:08.000+00:00",
+            "beepCount": 23
+        }
+    ]
 }
