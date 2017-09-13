@@ -32,13 +32,13 @@ h2 {
     font-family: nimbus-sans-tw01con, sans-serif;
     font-weight: 300;
     font-size: 28px;
-    margin: 0 1vmax 0 1vmax;
+    margin: 0 1vmax 1vmin 1vmax;
     text-transform: uppercase;
 }
 
 a.info-link {
     text-decoration: none;
     color: #F84738;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
