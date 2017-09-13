@@ -76,6 +76,9 @@ function generateCalendar() {
             td.style.textAlign = "center";
             if (date <= getDaysInMonth(selectedMonth, selectedYear)) {
                 td.textContent = date;
+                if(selectedMonth === new Date().getMonth() && selectedYear === new Date().getFullYear() && date == new Date().getDate()) {
+                    td.style.color = "red";
+                }
                 if (alarms && alarms[selectedYear] && alarms[selectedYear][selectedMonth] && alarms[selectedYear][selectedMonth][date]) {
                     let r = 255;
                     let g = 240;
