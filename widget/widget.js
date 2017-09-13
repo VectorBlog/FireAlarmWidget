@@ -48,17 +48,17 @@ function TimeSpan(recentTime, pastTime) {
 }
 
 TimeSpan.prototype.getLargestUnitText = function() {
-    if(Math.floor(this.totalDays) >= 1) return "days";
-    else if (Math.floor(this.totalHours) >= 1) return "hours";
-    else if (Math.floor(this.totalMinutes) >= 1) return "minutes";
-    else if (Math.floor(this.totalSeconds) >= 1) return "seconds";
+    if(Math.floor(Math.abs(this.totalDays)) >= 1) return "days";
+    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return "hours";
+    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return "minutes";
+    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return "seconds";
     return "milliseconds";
 }
 
 TimeSpan.prototype.getLargestUnit = function() {
-    if(Math.floor(this.totalDays) >= 1) return Math.floor(this.totalDays);
-    else if (Math.floor(this.totalHours) >= 1) return Math.floor(this.totalHours);
-    else if (Math.floor(this.totalMinutes) >= 1) return Math.floor(this.totalMinutes);
-    else if (Math.floor(this.totalSeconds) >= 1) return Math.floor(this.totalSeconds);
+    if(Math.floor(Math.abs(this.totalDays)) >= 1) return Math.floor(this.totalDays);
+    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return Math.floor(this.totalHours);
+    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return Math.floor(this.totalMinutes);
+    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return Math.floor(this.totalSeconds);
     return Math.floor(this.totalMilliseconds);
 }
