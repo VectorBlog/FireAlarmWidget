@@ -1,6 +1,6 @@
 var months = ["JANUARY", "FEBUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-var selectedMonth = 8;
-var selectedYear = 2017;
+var selectedMonth = new Date().getMonth();
+var selectedYear = new Date().getFullYear();
 
 var alarms = [];
 
@@ -77,10 +77,13 @@ function generateCalendar() {
             if (date <= getDaysInMonth(selectedMonth, selectedYear)) {
                 td.textContent = date;
                 if (alarms && alarms[selectedYear] && alarms[selectedYear][selectedMonth] && alarms[selectedYear][selectedMonth][date]) {
-                    td.style.backgroundColor = "#F84738";
-                    td.style.fontWeight = "bold";
+                    let r = 255;
+                    let g = 240;
+                    let b = 240;
                     let count = alarms[selectedYear][selectedMonth][date].length;
                     let hoverText = `${count} alarm${count === 1 ? '' : 's'}\n`;
+                    td.style.backgroundColor = `rgb(${r}, ${g - 40 * count}, ${b - 40 * count})`;
+                    td.style.fontWeight = "bold";
                     for(let i = 0; i < count; i++) {
                         let alarm = alarms[selectedYear][selectedMonth][date][i];
                         hoverText += `${new Date(alarm.timestamp)}: ${alarm.beepCount} beep${alarm.beepCount === 1 ? '' : 's'}\n`;

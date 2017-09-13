@@ -28,8 +28,9 @@ function displayData(alarmSummary) {
     alarmCountDisplay.textContent = count;
 
     let timeDifference = new TimeSpan(Date.now(), timestamp);
-    timeDisplay.textContent = timeDifference.getLargestUnit();
-    timeUnitsDisplay.textContent = timeDifference.getLargestUnitText();
+    let amount = timeDifference.getLargestUnit();
+    timeDisplay.textContent = amount;
+    timeUnitsDisplay.textContent = timeDifference.getLargestUnitText(amount === 1);
 }
 
 function TimeSpan(recentTime, pastTime) {
@@ -47,12 +48,12 @@ function TimeSpan(recentTime, pastTime) {
     this.days = Math.floor(this.totalDays);
 }
 
-TimeSpan.prototype.getLargestUnitText = function() {
-    if(Math.floor(Math.abs(this.totalDays)) >= 1) return "days";
-    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return "hours";
-    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return "minutes";
-    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return "seconds";
-    return "milliseconds";
+TimeSpan.prototype.getLargestUnitText = function(singular) {
+    if(Math.floor(Math.abs(this.totalDays)) >= 1) return singular ? "day" : "days";
+    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return singular ? "hour" :"hours";
+    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return singular ? "minute" :"minutes";
+    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return singular ? "second" :"seconds";
+    return singular ? "millisecond" :"milliseconds";
 }
 
 TimeSpan.prototype.getLargestUnit = function() {
