@@ -18,6 +18,7 @@ p.number {
     font-size: 40px;
     color: #F84738;
     margin-bottom: 0;
+    line-height: 36px;
 }
 
 p.units {

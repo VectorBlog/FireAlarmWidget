@@ -4,7 +4,7 @@ var selectedMonth = 8;
 
 document.body.onload = () => {
     generateCalendar();
-}
+};
 
 function nextMonth() {
     selectedMonth++;
