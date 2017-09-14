@@ -6,6 +6,12 @@ body {
     margin: 1vmin;
 }
 
+div.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
 p {
     margin: 1vmin;
 }
@@ -21,12 +27,12 @@ p.month {
     width: 70%;
 }
 
-div.center-table {
+div.calendar-container {
     width: 300px;
-    border: solid 1px black;
+    margin: 1vmin 1vmax;
 }
 
-div.center-table table,
+div.calendar-container table,
 th,
 td {
     margin: 0 auto;
@@ -56,6 +62,60 @@ div.right {
     border-left: 12px solid #FE8C7F;
 }
 
-th.header-cell {
+thead.center-headers th {
     text-align: center;
+}
+
+div.widget-container {
+    margin: 1vmin 1vmax;
+}
+
+iframe {
+    width: 200px;
+    border: none;
+}
+
+a.info-link {
+    text-decoration: none;
+    color: #F84738;
+    font-size: 14px;
+    width: 50%;
+    font-weight: bold;
+    margin: 0 1vmax;
+}
+
+p.alarm-title {
+    color: #F84738;
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: bold;
+    margin: 0;
+}
+
+p.label {
+    color: #FE8C7F;
+    font-variant-caps: all-small-caps;
+    font-weight: 500;
+    text-align: left;
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+}
+
+p.details {
+    text-align: left;
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+}
+
+p.heading {
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+a.alarm-date {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
 }

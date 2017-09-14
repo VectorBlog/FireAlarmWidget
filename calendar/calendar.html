@@ -3,25 +3,39 @@
     <script src="./calendar.js" async></script>
     <link rel="stylesheet" href="./calendar.css">
     <link rel="stylesheet" href="https://static.parastorage.com/services/santa-resources/resources/viewer/user-site-fonts/v3/languages.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <div class="center-table">
-        <div class="left" onclick="prevMonth()"></div>
-        <p class="month" id="selectedMonth">SEPTEMBER 2017</p>
-        <div class="right" onclick="nextMonth()"></div>
-        <table border="1">
-            <thead>
-                <th class="header-cell">S</th>
-                <th class="header-cell">M</th>
-                <th class="header-cell">T</th>
-                <th class="header-cell">W</th>
-                <th class="header-cell">T</th>
-                <th class="header-cell">F</th>
-                <th class="header-cell">S</th>
-            </thead>
-            <tbody id="monthCalendar">
-            </tbody>
-        </table>
+    <h2>Fire Alarm Info Page</h2>
+    <div class="content-wrapper">
+        <div class="widget-container">
+            <iframe src="../widget/widget.html" width="200" height="260" scrolling="no"></iframe>
+        </div>
+        <div class="calendar-container">
+            <div class="left" onclick="prevMonth()"></div>
+            <p class="month" id="selectedMonth">SEPTEMBER 2017</p>
+            <div class="right" onclick="nextMonth()"></div>
+            <table border="1">
+                <thead class="center-headers">
+                    <th>S</th>
+                    <th>M</th>
+                    <th>T</th>
+                    <th>W</th>
+                    <th>T</th>
+                    <th>F</th>
+                    <th>S</th>
+                </thead>
+                <tbody id="monthCalendar">
+                </tbody>
+            </table>
+            <a class="info-link" href="#" onclick="lastAlarm();">Last Alarm</a>
+            <a class="info-link" href="#" onclick="today();">Current Month</a>
+        </div>
+        <div class="details-container">
+            <p class="heading" id="detailsHeader">DETAILS</p>
+            <div id="detailsList">
+            </div>
+        </div>
     </div>
 </body>
