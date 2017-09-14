@@ -10,6 +10,7 @@ div.content-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    justify-content: center;
 }
 
 p {
@@ -30,6 +31,7 @@ p.month {
 div.calendar-container {
     width: 300px;
     margin: 1vmin 1vmax;
+    flex: 1;
 }
 
 div.calendar-container table,
@@ -68,6 +70,7 @@ thead.center-headers th {
 
 div.widget-container {
     margin: 1vmin 1vmax;
+    flex: 1;
 }
 
 iframe {
@@ -87,23 +90,27 @@ a.info-link {
 p.alarm-title {
     color: #F84738;
     text-transform: uppercase;
-    text-align: left;
     font-weight: bold;
     margin: 0;
+    margin-top: 1vmin;
 }
 
 p.label {
     color: #FE8C7F;
     font-variant-caps: all-small-caps;
     font-weight: 500;
-    text-align: left;
     font-size: 24px;
     margin: 0;
     font-weight: bold;
+    line-height: 24px;
+}
+
+div.details-container {
+    flex: 1;
+    margin: 1vmin 1vmax;
 }
 
 p.details {
-    text-align: left;
     font-size: 20px;
     margin: 0;
     font-weight: bold;
@@ -112,10 +119,17 @@ p.details {
 p.heading {
     font-size: 24px;
     text-transform: uppercase;
+    margin: 0;
+    text-align: center;
 }
 
 a.alarm-date {
     text-decoration: none;
     font-weight: bold;
     color: black;
+}
+
+div.empty {
+    flex: 1;
+    margin: 1vmin 1vmax;
 }
