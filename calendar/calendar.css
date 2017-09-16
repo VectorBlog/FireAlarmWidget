@@ -160,3 +160,9 @@ p.number {
     margin-bottom: 0;
     line-height: 36px;
 }
+
+.half-width {
+    margin: 0 auto !important;
+    width: 50%;
+    text-align: left;
+}

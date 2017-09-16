@@ -195,8 +195,9 @@ function countUpTimer() {
     let text = timespan.toLongString().split(' ');
     timer.innerHTML = "";
     let header = document.createElement("p");
-    header.textContent = "LAST ALARM";
+    header.textContent = "TIME SINCE LAST ALARM";
     header.classList.add("heading");
+    header.classList.add("half-width");
     timer.appendChild(header);
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
@@ -204,10 +205,6 @@ function countUpTimer() {
         p.classList.add(i % 2 === 0 ? "number" : "label");
         timer.appendChild(p);
     }
-    let p = document.createElement("p");
-    p.textContent = "ago";
-    p.classList.add("label");
-    timer.appendChild(p);
     header = document.createElement("p");
     header.classList.add("heading");
     timer.appendChild(header);
@@ -225,8 +222,9 @@ function longestTime() {
     timer.innerHTML = "";
 
     let header = document.createElement("p");
-    header.textContent = "LONGEST TIME";
+    header.textContent = "LONGEST TIME BETWEEN ALARMS";
     header.classList.add("heading");
+    header.classList.add("half-width");    
     timer.appendChild(header);
     let text = differences[0].toLongString().split(' ');
     for (let i = 0; i < text.length; i++) {
@@ -238,8 +236,9 @@ function longestTime() {
 
     timer = document.getElementById("shortestTime");
     header = document.createElement("p");
-    header.textContent = "SHORTEST TIME";
+    header.textContent = "SHORTEST TIME BETWEEN ALARMS";
     header.classList.add("heading");
+    header.classList.add("half-width");
     timer.appendChild(header);
     text = differences[differences.length - 1].toLongString().split(' ');
     for (let i = 0; i < text.length; i++) {
