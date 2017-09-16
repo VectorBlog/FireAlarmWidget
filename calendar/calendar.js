@@ -22,7 +22,7 @@ document.body.onload = () => {
     let request = new XMLHttpRequest();
     request.onreadystatechange = () => {
         if (request.readyState == 4 && request.status == 200) {
-            let alarmList = JSON.parse(request.responseText).alarms;
+            let alarmList = JSON.parse(request.responseText);
             for (let i = 0; i < alarmList.length; i++) {
                 let alarmDate = new Date(alarmList[i].timestamp);
                 dates.push(alarmDate);
@@ -49,7 +49,7 @@ document.body.onload = () => {
             setInterval(countUpTimer, 1000);
         }
     };
-    request.open("GET", "../testdata.json"/* Enter API URL Here */, true);
+    request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
     request.send();
 };
 

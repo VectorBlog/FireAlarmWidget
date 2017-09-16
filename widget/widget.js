@@ -21,13 +21,13 @@ function loadData() {
             setInterval(() => displayData(JSON.parse(request.responseText)), 1000);
         }
     };
-    request.open("GET", "../testdata.json"/* Enter API URL Here */, true);
+    request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary", true);
     request.send();
 }
 
 function displayData(alarmSummary) {
-    let timestamp = new Date(alarmSummary.lastAlarm);
-    let count = alarmSummary.alarmCount;
+    let timestamp = new Date(alarmSummary.lastAlarmTimestamp);
+    let count = alarmSummary.alarmsThisYear;
 
     alarmCountDisplay.textContent = count;
 
