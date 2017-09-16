@@ -6,6 +6,7 @@ var mostRecentAlarm;
 var mostRecentAlarmCell;
 
 var alarms = [];
+var dates = [];
 
 function getDaysInMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();
@@ -22,6 +23,7 @@ document.body.onload = () => {
             let alarmList = JSON.parse(request.responseText).alarms;
             for (let i = 0; i < alarmList.length; i++) {
                 let alarmDate = new Date(alarmList[i].timestamp);
+                dates.push(alarmDate);
                 if (alarmDate > (mostRecentAlarm || new Date(0))) {
                     mostRecentAlarm = alarmDate;
                 }
@@ -35,10 +37,14 @@ document.body.onload = () => {
                     alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()] = [];
                 }
                 alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].push(alarmList[i]);
+                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].sort((a,b)=>new Date(b.timestamp) - new Date(a.timestamp));
             }
 
             generateCalendar();
             lastAlarm();
+            longestTime();
+            countUpTimer();
+            setInterval(countUpTimer, 1000);
         }
     };
     request.open("GET", "../testdata.json"/* Enter API URL Here */, true);
@@ -119,10 +125,9 @@ function generateCalendar() {
                     let g = 240;
                     let b = 240;
                     let count = alarms[selectedYear][selectedMonth][date].length;
-                    let hoverText = `${count} alarm${count === 1 ? '' : 's'}\n`;
                     td.style.backgroundColor = `rgb(${r}, ${g - 40 * count}, ${b - 40 * count})`;
                     let a = document.createElement("a");
-                    a.href = "#";
+                    a.href = "#selectedDate";
                     a.dataset.month = selectedMonth;
                     a.dataset.year = selectedYear;
                     a.dataset.date = date;
@@ -130,11 +135,7 @@ function generateCalendar() {
                     a.onclick = function () { alarmDetails(this.dataset.year, this.dataset.month, this.dataset.date) };
                     td.textContent = "";
                     a.textContent = date;
-                    for (let i = 0; i < count; i++) {
-                        let alarm = alarms[selectedYear][selectedMonth][date][i];
-                        hoverText += `${new Date(alarm.timestamp)}: ${alarm.beepCount} beep${alarm.beepCount === 1 ? '' : 's'}\n`;
-                    }
-                    a.title = hoverText;
+                    a.title = `${count} alarm${count === 1 ? '' : 's'}`;
                     td.appendChild(a);
                     mostRecentAlarmCell = td;
                 }
@@ -162,8 +163,9 @@ function createDetails(timestamp, beepCount, number) {
     let pm = false;
     if (timestamp.getHours() > 12) pm = true;
     let timeString = `${timestamp.getHours() % 12 === 0 ? 12 : timestamp.getHours() % 12}:${pad(timestamp.getMinutes())}:${pad(timestamp.getSeconds())} ${(pm ? "PM" : "AM")}`;
-    
+
     time.textContent = timeString;
+    time.title = timestamp;
     list.appendChild(time);
     let beepsLabel = document.createElement("p");
     beepsLabel.classList.add("label");
@@ -184,9 +186,63 @@ function alarmDetails(y, m, d) {
     }
 }
 
-function pad(num) {
-    let str = "" + num;
-    if (str.length === 1)
-        str = "0" + str;
-    return str;
+function countUpTimer() {
+    let timer = document.getElementById("countUpTimer");
+    let timespan = new TimeSpan(new Date(), mostRecentAlarm);
+    let text = timespan.toLongString().split(' ');
+    timer.innerHTML = "";
+    let header = document.createElement("p");
+    header.textContent = "LAST ALARM";
+    header.classList.add("header");
+    timer.appendChild(header);
+    for (let i = 0; i < text.length; i++) {
+        let p = document.createElement("p");
+        p.textContent = text[i];
+        p.classList.add(i % 2 === 0 ? "number" : "label");
+        timer.appendChild(p);
+    }
+    let p = document.createElement("p");
+    p.textContent = "ago";
+    p.classList.add("label");
+    timer.appendChild(p);
+    header = document.createElement("p");
+    header.classList.add("header");
+    timer.appendChild(header);
+}
+
+var differences = [];
+
+function longestTime() {
+    dates.sort((a, b) => b.valueOf() - a.valueOf());
+    for (let i = 0; i < dates.length - 1; i++) {
+        differences.push(new TimeSpan(dates[i], dates[i + 1]));
+    }
+    differences.sort((a, b) => b.totalMilliseconds - a.totalMilliseconds);
+    let timer = document.getElementById("longestTime");
+    timer.innerHTML = "";
+
+    let header = document.createElement("p");
+    header.textContent = "LONGEST TIME";
+    header.classList.add("header");
+    timer.appendChild(header);
+    let text = differences[0].toLongString().split(' ');
+    for (let i = 0; i < text.length; i++) {
+        let p = document.createElement("p");
+        p.textContent = text[i];
+        p.classList.add(i % 2 === 0 ? "number" : "label");
+        timer.appendChild(p);
+    }
+
+    timer = document.getElementById("shortestTime");
+    header = document.createElement("p");
+    header.textContent = "SHORTEST TIME";
+    header.classList.add("header");
+    timer.appendChild(header);
+    text = differences[differences.length - 1].toLongString().split(' ');
+    for (let i = 0; i < text.length; i++) {
+        let p = document.createElement("p");
+        p.textContent = text[i];
+        p.classList.add(i % 2 === 0 ? "number" : "label");
+        timer.appendChild(p);
+    }
 }

@@ -1,5 +1,6 @@
 <head>
-    <title>Fire Alarm Info Page</title>
+    <title>NHHS Fire Alarms</title>
+    <script src="../timespan.js"></script>
     <script src="./calendar.js" async></script>
     <link rel="stylesheet" href="./calendar.css">
     <link rel="stylesheet" href="https://static.parastorage.com/services/santa-resources/resources/viewer/user-site-fonts/v3/languages.css">
@@ -7,9 +8,8 @@
 </head>
 
 <body>
-    <h2>Fire Alarm Info Page</h2>
+    <h2>North Hollywood High School Fire Alarms</h2>
     <div class="content-wrapper">
-        <div class="empty"></div>
         <div class="widget-container">
             <iframe src="../widget/widget.html" width="200" height="260" scrolling="no"></iframe>
         </div>
@@ -30,14 +30,27 @@
                 <tbody id="monthCalendar">
                 </tbody>
             </table>
-            <a class="info-link" href="#" onclick="lastAlarm();">Last Alarm</a>
-            <a class="info-link" href="#" onclick="today();">Current Month</a>
+            <a class="info-link" href="#lastAlarm" onclick="lastAlarm();">Last Alarm</a>
+            <a class="info-link" href="#today" onclick="today();">Current Month</a>
         </div>
         <div class="details-container">
             <p class="heading" id="detailsHeader">DETAILS</p>
             <div id="detailsList">
             </div>
         </div>
-        <div class="empty"></div>        
+        <div class="timer-container">
+            <div id="countUpTimer">
+            </div>
+        </div>
+        <div class="longest-time-container">
+            <div id="longestTime">
+            </div>
+        </div>
+        <div class="shortest-time-container">
+            <div id="shortestTime">
+            </div>
+        </div>
     </div>
+
+    <!-- Alarm list, per period counts?, live updating time, count up timer widget, move hover text to details instead of calendar -->
 </body>

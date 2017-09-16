@@ -8,9 +8,27 @@ body {
 
 div.content-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-flow: row wrap;
     justify-content: center;
+    align-content: space-between;
+}
+
+@media only screen and (min-device-width: 1366px) {
+    div.content-wrapper > div {
+        flex-basis: 25%;
+    }
+}
+
+@media only screen and (max-device-width: 640px) {
+    div.content-wrapper > div {
+        flex-basis: 100%;
+    }
+}
+
+@media only screen and (max-device-width: 1365px) {
+    div.content-wrapper > div {
+        flex-basis: 40%;
+    }
 }
 
 p {
@@ -31,7 +49,6 @@ p.month {
 div.calendar-container {
     width: 300px;
     margin: 1vmin 1vmax;
-    flex: 1;
 }
 
 div.calendar-container table,
@@ -70,7 +87,6 @@ thead.center-headers th {
 
 div.widget-container {
     margin: 1vmin 1vmax;
-    flex: 1;
 }
 
 iframe {
@@ -106,7 +122,6 @@ p.label {
 }
 
 div.details-container {
-    flex: 1;
     margin: 1vmin 1vmax;
 }
 
@@ -129,7 +144,9 @@ a.alarm-date {
     color: black;
 }
 
-div.empty {
-    flex: 1;
-    margin: 1vmin 1vmax;
+p.number {
+    font-size: 40px;
+    color: #F84738;
+    margin-bottom: 0;
+    line-height: 36px;
 }

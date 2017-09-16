@@ -14,10 +14,10 @@ function loadData() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = () => {
         if (request.readyState == 4 && request.status == 200) {
-            displayData(JSON.parse(request.responseText));
+            setInterval(()=>displayData(JSON.parse(request.responseText)),1000);
         }
     };
-    request.open("GET","../testdata.json"/* Enter API URL Here */,true);
+    request.open("GET", "../testdata.json"/* Enter API URL Here */, true);
     request.send();
 }
 
@@ -31,35 +31,4 @@ function displayData(alarmSummary) {
     let amount = timeDifference.getLargestUnit();
     timeDisplay.textContent = amount;
     timeUnitsDisplay.textContent = timeDifference.getLargestUnitText(amount === 1);
-}
-
-function TimeSpan(recentTime, pastTime) {
-    let diff = recentTime - pastTime;
-
-    this.totalMilliseconds = diff;
-    this.milliseconds = this.totalMilliseconds % 1000;
-    this.totalSeconds = diff / 1000;
-    this.seconds = Math.floor(this.totalSeconds) % 60;
-    this.totalMinutes = this.totalSeconds / 60;
-    this.minutes = Math.floor(this.totalMinutes) % 60;
-    this.totalHours = this.totalMinutes / 60;
-    this.hours = Math.floor(this.totalHours) % 24;
-    this.totalDays = this.totalHours / 24;
-    this.days = Math.floor(this.totalDays);
-}
-
-TimeSpan.prototype.getLargestUnitText = function(singular) {
-    if(Math.floor(Math.abs(this.totalDays)) >= 1) return singular ? "day" : "days";
-    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return singular ? "hour" :"hours";
-    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return singular ? "minute" :"minutes";
-    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return singular ? "second" :"seconds";
-    return singular ? "millisecond" :"milliseconds";
-}
-
-TimeSpan.prototype.getLargestUnit = function() {
-    if(Math.floor(Math.abs(this.totalDays)) >= 1) return Math.floor(this.totalDays);
-    else if (Math.floor(Math.abs(this.totalHours)) >= 1) return Math.floor(this.totalHours);
-    else if (Math.floor(Math.abs(this.totalMinutes)) >= 1) return Math.floor(this.totalMinutes);
-    else if (Math.floor(Math.abs(this.totalSeconds)) >= 1) return Math.floor(this.totalSeconds);
-    return Math.floor(this.totalMilliseconds);
 }
