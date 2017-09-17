@@ -1,4 +1,4 @@
-document.body.onload = () => {
+function onLoad() {
     loadData();
     setInterval(loadData, 300000);
 
