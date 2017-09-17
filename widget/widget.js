@@ -25,7 +25,7 @@ function loadData() {
             updateInterval = setInterval(() => displayData(JSON.parse(request.responseText)), 1000);
         }
     };
-    request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary", true);
+    request.open("GET", "https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary", true);
     request.send();
 }
 
