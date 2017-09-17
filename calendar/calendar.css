@@ -19,7 +19,7 @@ div.content-wrapper {
     }
 }
 
-@media only screen and (max-device-width: 640px) {
+@media only screen and (max-device-width: 767px) {
     div.content-wrapper > div {
         flex-basis: 100%;
     }
@@ -27,7 +27,7 @@ div.content-wrapper {
 
 @media only screen and (max-device-width: 1365px) {
     div.content-wrapper > div {
-        flex-basis: 40%;
+        flex-basis: 50%;
     }
 }
 
@@ -78,6 +78,8 @@ div.left {
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     border-right: 12px solid #FE8C7F;
+    cursor: pointer;
+    user-select: none;
 }
 
 div.right {
@@ -87,6 +89,8 @@ div.right {
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     border-left: 12px solid #FE8C7F;
+    cursor: pointer;
+    user-select: none;
 }
 
 thead.center-headers th {
@@ -109,6 +113,8 @@ a.info-link {
     width: 50%;
     font-weight: bold;
     margin: 0 1vmax;
+    cursor: pointer;
+    user-select: none;
 }
 
 p.alarm-title {
@@ -152,6 +158,8 @@ a.alarm-date {
     text-decoration: none;
     font-weight: bold;
     color: black;
+    cursor: pointer;
+    user-select: none;
 }
 
 p.number {

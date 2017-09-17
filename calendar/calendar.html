@@ -18,7 +18,7 @@
         </div>
         <div class="calendar-container">
             <div class="left" onclick="prevMonth()"></div>
-            <p class="month" id="selectedMonth">SEPTEMBER 2017</p>
+            <p class="month" id="selectedMonth">LOADING CALENDAR</p>
             <div class="right" onclick="nextMonth()"></div>
             <table border="1">
                 <thead class="center-headers">
@@ -33,11 +33,11 @@
                 <tbody id="monthCalendar">
                 </tbody>
             </table>
-            <a class="info-link" href="#lastAlarm" onclick="lastAlarm();">Last Alarm</a>
-            <a class="info-link" href="#today" onclick="today();">Current Month</a>
+            <a class="info-link" onclick="lastAlarm();">Last Alarm</a>
+            <a class="info-link" onclick="today();">Current Month</a>
         </div>
         <div class="details-container">
-            <p class="heading" id="detailsHeader">DETAILS</p>
+            <p class="heading" id="detailsHeader">LOADING ALARMS</p>
             <div id="detailsList">
             </div>
         </div>
@@ -54,6 +54,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Alarm list, per period counts?, live updating time, count up timer widget, move hover text to details instead of calendar -->
 </body>

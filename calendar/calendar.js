@@ -9,6 +9,7 @@ var tintInterval;
 
 var alarms = [];
 var dates = [];
+var differences = [];
 
 function getDaysInMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();
@@ -19,9 +20,22 @@ function getFirstDayOfWeek(month, year) {
 }
 
 document.body.onload = () => {
+    getData(true);
+    setInterval(getData, 300000);
+};
+
+function getData(first) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = () => {
         if (request.readyState == 4 && request.status == 200) {
+
+            alarms = [];
+            dates = [];
+            differences = [];
+            mostRecentAlarm = undefined;
+            mostRecentAlarmCell = undefined;
+            tintInterval = undefined;
+
             let alarmList = JSON.parse(request.responseText);
             for (let i = 0; i < alarmList.length; i++) {
                 let alarmDate = new Date(alarmList[i].timestamp);
@@ -39,11 +53,11 @@ document.body.onload = () => {
                     alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()] = [];
                 }
                 alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].push(alarmList[i]);
-                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].sort((a,b)=>new Date(b.timestamp) - new Date(a.timestamp));
+                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             }
 
+            if (first) lastAlarm();            
             generateCalendar();
-            lastAlarm();
             longestTime();
             countUpTimer();
             setInterval(countUpTimer, 1000);
@@ -51,7 +65,7 @@ document.body.onload = () => {
     };
     request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
     request.send();
-};
+}
 
 function nextMonth() {
     selectedMonth++;
@@ -130,7 +144,6 @@ function generateCalendar() {
                     let count = alarms[selectedYear][selectedMonth][date].length;
                     td.style.backgroundColor = `rgb(${r}, ${g - 40 * count}, ${b - 40 * count})`;
                     let a = document.createElement("a");
-                    a.href = "#selectedDate";
                     a.dataset.month = selectedMonth;
                     a.dataset.year = selectedYear;
                     a.dataset.date = date;
@@ -192,7 +205,7 @@ function alarmDetails(y, m, d) {
 function countUpTimer() {
     let timer = document.getElementById("countUpTimer");
     let timespan = new TimeSpan(new Date(), mostRecentAlarm);
-    let text = timespan.toLongString().split(' ');
+    let text = timespan.toLongString(true).split(' ');
     timer.innerHTML = "";
     let header = document.createElement("p");
     header.textContent = "TIME SINCE LAST ALARM";
@@ -210,8 +223,6 @@ function countUpTimer() {
     timer.appendChild(header);
 }
 
-var differences = [];
-
 function longestTime() {
     dates.sort((a, b) => b.valueOf() - a.valueOf());
     for (let i = 0; i < dates.length - 1; i++) {
@@ -224,9 +235,9 @@ function longestTime() {
     let header = document.createElement("p");
     header.textContent = "LONGEST TIME BETWEEN ALARMS";
     header.classList.add("heading");
-    header.classList.add("half-width");    
+    header.classList.add("half-width");
     timer.appendChild(header);
-    let text = differences[0].toLongString().split(' ');
+    let text = differences[0].toLongString(true).split(' ');
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
         p.textContent = text[i];
@@ -235,12 +246,13 @@ function longestTime() {
     }
 
     timer = document.getElementById("shortestTime");
+    timer.innerHTML = "";
     header = document.createElement("p");
     header.textContent = "SHORTEST TIME BETWEEN ALARMS";
     header.classList.add("heading");
     header.classList.add("half-width");
     timer.appendChild(header);
-    text = differences[differences.length - 1].toLongString().split(' ');
+    text = differences[differences.length - 1].toLongString(true).split(' ');
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
         p.textContent = text[i];

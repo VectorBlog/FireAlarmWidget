@@ -33,12 +33,12 @@ TimeSpan.prototype.toString = function () {
     return `${this.days > 0 ? `${pad(this.days)}.` : ""}${pad(this.hours)}:${pad(this.minutes)}:${pad(this.seconds)}:${this.milliseconds > 0 ? `.${pad(this.milliseconds,8)}` : ""}`;
 }
 
-TimeSpan.prototype.toLongString = function() {
+TimeSpan.prototype.toLongString = function(includeZeroValues) {
     let string = "";
-    if(this.days > 0) string += `${this.days} day${this.days === 1 ? '' : 's'} `;
-    if(this.hours > 0) string += `${this.hours} hour${this.hours === 1 ? '' : 's'} ` ;
-    if(this.minutes > 0) string += `${this.minutes} minute${this.minutes === 1 ? '' : 's'} `;
-    if(this.seconds > 0) string += `${this.seconds} second${this.seconds === 1 ? '' : 's'} `;
+    if(includeZeroValues || this.days > 0) string += `${this.days} day${this.days === 1 ? '' : 's'} `;
+    if(includeZeroValues || this.hours > 0) string += `${this.hours} hour${this.hours === 1 ? '' : 's'} ` ;
+    if(includeZeroValues || this.minutes > 0) string += `${this.minutes} minute${this.minutes === 1 ? '' : 's'} `;
+    if(includeZeroValues || this.seconds > 0) string += `${this.seconds} second${this.seconds === 1 ? '' : 's'} `;
     return string.trim();
 }
 

@@ -1,5 +1,6 @@
 document.body.onload = () => {
     loadData();
+    setInterval(loadData, 300000);
 
     if (location.search.indexOf("embed") >= 0) {
         document.getElementById("infoLink").remove();
@@ -10,6 +11,8 @@ var timeDisplay;
 var timeUnitsDisplay;
 var alarmCountDisplay;
 
+var updateInterval;
+
 function loadData() {
     timeDisplay = document.getElementById("timeSinceLast");
     timeUnitsDisplay = document.getElementById("timeSinceLastUnits");
@@ -18,7 +21,8 @@ function loadData() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = () => {
         if (request.readyState == 4 && request.status == 200) {
-            setInterval(() => displayData(JSON.parse(request.responseText)), 1000);
+            clearInterval(updateInterval);
+            updateInterval = setInterval(() => displayData(JSON.parse(request.responseText)), 1000);
         }
     };
     request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary", true);
