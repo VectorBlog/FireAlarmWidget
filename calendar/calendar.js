@@ -31,7 +31,6 @@ function getData(first) {
 
             alarms = [];
             dates = [];
-            differences = [];
             mostRecentAlarm = undefined;
             mostRecentAlarmCell = undefined;
             tintInterval = undefined;
@@ -60,11 +59,16 @@ function getData(first) {
             generateCalendar();
             longestTime();
             countUpTimer();
-            setInterval(countUpTimer, 1000);
+            setInterval(incrementTimers, 1000);
         }
     };
     request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
     request.send();
+}
+
+function incrementTimers() {
+    longestTime();
+    countUpTimer();
 }
 
 function nextMonth() {
@@ -224,6 +228,7 @@ function countUpTimer() {
 }
 
 function longestTime() {
+    differences = [];
     dates.sort((a, b) => b.valueOf() - a.valueOf());
     for (let i = 0; i < dates.length - 1; i++) {
         differences.push(new TimeSpan(dates[i], dates[i + 1]));
@@ -237,7 +242,16 @@ function longestTime() {
     header.classList.add("heading");
     header.classList.add("half-width");
     timer.appendChild(header);
-    let text = differences[0].toLongString(true).split(' ');
+
+    let currentPeriod = new TimeSpan(Date.now(), dates[0]);
+    let text;
+    if(differences[0].totalMilliseconds < currentPeriod.totalMilliseconds) {
+        text = currentPeriod.toLongString(true).split(' ');        
+    }
+    else {
+        text = differences[0].toLongString(true).split(' ');        
+    }
+
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
         p.textContent = text[i];
