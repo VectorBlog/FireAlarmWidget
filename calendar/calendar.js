@@ -1,4 +1,4 @@
-var months = ["JANUARY", "FEBUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+var months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
 var selectedMonth = new Date().getMonth();
 var selectedYear = new Date().getFullYear();
 
@@ -62,7 +62,7 @@ function getData(first) {
             setInterval(incrementTimers, 1000);
         }
     };
-    request.open("GET", "http://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
+    request.open("GET", "https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
     request.send();
 }
 
