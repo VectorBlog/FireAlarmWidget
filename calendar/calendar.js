@@ -4,6 +4,7 @@ var selectedYear = new Date().getFullYear();
 
 var mostRecentAlarm;
 var mostRecentAlarmCell;
+var lastAlarmTimestamp;
 
 var tintInterval;
 
@@ -25,10 +26,14 @@ document.body.onload = () => {
 };
 
 function getData(first) {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-        if (request.readyState == 4 && request.status == 200) {
+    fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary")
+    .then(response=>response.json())
+    .then(json => {
+        lastAlarmTimestamp = new Date(json.lastAlarmTimestamp);
 
+        fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches")
+        .then(response => response.json())
+        .then(alarmList => {
             alarms = [];
             dates = [];
             differences = [];
@@ -36,7 +41,6 @@ function getData(first) {
             mostRecentAlarmCell = undefined;
             tintInterval = undefined;
 
-            let alarmList = JSON.parse(request.responseText);
             for (let i = 0; i < alarmList.length; i++) {
                 let alarmDate = new Date(alarmList[i].timestamp);
                 dates.push(alarmDate);
@@ -61,10 +65,8 @@ function getData(first) {
             longestTime();
             countUpTimer();
             setInterval(countUpTimer, 1000);
-        }
-    };
-    request.open("GET", "https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches", true);
-    request.send();
+        });
+    });
 }
 
 function nextMonth() {
@@ -204,7 +206,7 @@ function alarmDetails(y, m, d) {
 
 function countUpTimer() {
     let timer = document.getElementById("countUpTimer");
-    let timespan = new TimeSpan(new Date(), mostRecentAlarm);
+    let timespan = new TimeSpan(new Date(), lastAlarmTimestamp);
     let text = timespan.toLongString(true).split(' ');
     timer.innerHTML = "";
     let header = document.createElement("p");

@@ -18,15 +18,12 @@ function loadData() {
     timeUnitsDisplay = document.getElementById("timeSinceLastUnits");
     alarmCountDisplay = document.getElementById("alarmCount");
 
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-        if (request.readyState == 4 && request.status == 200) {
-            clearInterval(updateInterval);
-            updateInterval = setInterval(() => displayData(JSON.parse(request.responseText)), 1000);
-        }
-    };
-    request.open("GET", "https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary", true);
-    request.send();
+    fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary")
+    .then(response => response.json())
+    .then(json => {
+        clearInterval(updateInterval);
+        updateInterval = setInterval(() => displayData(json), 1000);
+    });
 }
 
 function displayData(alarmSummary) {
