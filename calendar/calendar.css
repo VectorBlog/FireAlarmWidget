@@ -3,32 +3,6 @@ body {
     font-family: helvetica-w01-light, helvetica-w02-light, sans-serif;
     font-size: 24px;
     font-weight: 400;
-    margin: 1vmin;
-}
-
-div.content-wrapper {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-content: space-between;
-}
-
-@media only screen and (min-device-width: 1366px) {
-    div.content-wrapper > div {
-        flex-basis: 25%;
-    }
-}
-
-@media only screen and (max-device-width: 767px) {
-    div.content-wrapper > div {
-        flex-basis: 100%;
-    }
-}
-
-@media only screen and (max-device-width: 1365px) {
-    div.content-wrapper > div {
-        flex-basis: 50%;
-    }
 }
 
 h2 {
@@ -54,21 +28,14 @@ p.month {
     font-weight: 300;
 }
 
-div.calendar-container {
-    width: 300px;
-    margin: 1vmin 1vmax;
-}
-
 div.calendar-container table,
 th,
 td {
-    margin: 0 auto;
     text-align: left;
     border-collapse: collapse;
     border: 1px solid black;
-    padding: 2px;
     font-size: 24px;
-    margin-bottom: 1vmin;
+    margin: 0 auto;
 }
 
 div.left {
@@ -95,10 +62,6 @@ div.right {
 
 thead.center-headers th {
     text-align: center;
-}
-
-div.widget-container {
-    margin: 1vmin 1vmax;
 }
 
 iframe {
@@ -135,10 +98,6 @@ p.label {
     line-height: 24px;
 }
 
-div.details-container {
-    margin: 1vmin 1vmax;
-}
-
 p.details {
     font-size: 20px;
     margin: 0;
@@ -167,10 +126,4 @@ p.number {
     color: #F84738;
     margin-bottom: 0;
     line-height: 36px;
-}
-
-.half-width {
-    margin: 0 auto !important;
-    width: 50%;
-    text-align: left;
 }

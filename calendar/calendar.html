@@ -6,17 +6,20 @@
     <script src="../timespan.js"></script>
     <script src="./calendar.js" async></script>
     <link rel="stylesheet" href="./calendar.css">
+    <link rel="stylesheet" href="./blueprint.min.css">
     <link rel="stylesheet" href="https://static.parastorage.com/services/santa-resources/resources/viewer/user-site-fonts/v3/languages.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
-    <h2>North Hollywood High School Fire Alarms</h2>
-    <div class="content-wrapper">
-        <div class="widget-container">
+<body bp-layout="container">
+    <div bp-layout="row">
+        <h2 bp-layout="col 12">North Hollywood High School Fire Alarms</h2>
+    </div>
+    <div bp-layout="row start">
+        <div bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <iframe src="../widget/widget.html?embed=true" width="200" height="260" scrolling="no"></iframe>
         </div>
-        <div class="calendar-container">
+        <div class="calendar-container" bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <div class="left" onclick="prevMonth()"></div>
             <p class="month" id="selectedMonth">LOADING CALENDAR</p>
             <div class="right" onclick="nextMonth()"></div>
@@ -36,20 +39,20 @@
             <a class="info-link" onclick="lastAlarm();">Last Alarm</a>
             <a class="info-link" onclick="today();">Current Month</a>
         </div>
-        <div class="details-container">
+        <div bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <p class="heading" id="detailsHeader">LOADING ALARMS</p>
             <div id="detailsList">
             </div>
         </div>
-        <div class="timer-container">
+        <div bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <div id="countUpTimer">
             </div>
         </div>
-        <div class="longest-time-container">
+        <div bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <div id="longestTime">
             </div>
         </div>
-        <div class="shortest-time-container">
+        <div bp-layout="col 12 12@sm 6@md 4@lg 4@xl">
             <div id="shortestTime">
             </div>
         </div>
