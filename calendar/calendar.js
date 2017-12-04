@@ -27,45 +27,45 @@ document.body.onload = () => {
 
 function getData(first) {
     fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary")
-    .then(response=>response.json())
-    .then(json => {
-        lastAlarmTimestamp = new Date(json.lastAlarmTimestamp);
-
-        fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches")
         .then(response => response.json())
-        .then(alarmList => {
-            alarms = [];
-            dates = [];
-            mostRecentAlarm = undefined;
-            mostRecentAlarmCell = undefined;
-            tintInterval = undefined;
+        .then(json => {
+            lastAlarmTimestamp = new Date(json.lastAlarmTimestamp);
 
-            for (let i = 0; i < alarmList.length; i++) {
-                let alarmDate = new Date(alarmList[i].timestamp);
-                dates.push(alarmDate);
-                if (alarmDate > (mostRecentAlarm || new Date(0))) {
-                    mostRecentAlarm = alarmDate;
-                }
-                if (!alarms[alarmDate.getFullYear()]) {
-                    alarms[alarmDate.getFullYear()] = [];
-                }
-                if (!alarms[alarmDate.getFullYear()][alarmDate.getMonth()]) {
-                    alarms[alarmDate.getFullYear()][alarmDate.getMonth()] = [];
-                }
-                if (!alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()]) {
-                    alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()] = [];
-                }
-                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].push(alarmList[i]);
-                alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            }
+            fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches")
+                .then(response => response.json())
+                .then(alarmList => {
+                    alarms = [];
+                    dates = [];
+                    mostRecentAlarm = undefined;
+                    mostRecentAlarmCell = undefined;
+                    tintInterval = undefined;
 
-            if (first) lastAlarm();            
-            generateCalendar();
-            longestTime();
-            countUpTimer();
-            setInterval(incrementTimers, 1000);
+                    for (let i = 0; i < alarmList.length; i++) {
+                        let alarmDate = new Date(alarmList[i].timestamp);
+                        dates.push(alarmDate);
+                        if (alarmDate > (mostRecentAlarm || new Date(0))) {
+                            mostRecentAlarm = alarmDate;
+                        }
+                        if (!alarms[alarmDate.getFullYear()]) {
+                            alarms[alarmDate.getFullYear()] = [];
+                        }
+                        if (!alarms[alarmDate.getFullYear()][alarmDate.getMonth()]) {
+                            alarms[alarmDate.getFullYear()][alarmDate.getMonth()] = [];
+                        }
+                        if (!alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()]) {
+                            alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()] = [];
+                        }
+                        alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].push(alarmList[i]);
+                        alarms[alarmDate.getFullYear()][alarmDate.getMonth()][alarmDate.getDate()].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    }
+
+                    if (first) lastAlarm();
+                    generateCalendar();
+                    longestTime();
+                    countUpTimer();
+                    setInterval(incrementTimers, 1000);
+                });
         });
-    });
 }
 
 function incrementTimers() {
@@ -169,7 +169,7 @@ function generateCalendar() {
     }
 }
 
-function createDetails(timestamp, beepCount, number) {
+function createDetails(timestamp, beepCount, number, description) {
     let list = document.getElementById("detailsList");
     let title = document.createElement("p");
     title.classList.add("alarm-title");
@@ -189,6 +189,7 @@ function createDetails(timestamp, beepCount, number) {
     time.textContent = timeString;
     time.title = timestamp;
     list.appendChild(time);
+
     let beepsLabel = document.createElement("p");
     beepsLabel.classList.add("label");
     beepsLabel.textContent = "beeps";
@@ -197,6 +198,18 @@ function createDetails(timestamp, beepCount, number) {
     beeps.classList.add("details");
     beeps.textContent = beepCount;
     list.appendChild(beeps);
+
+    if (description !== null) {
+        let descriptionLabel = document.createElement("p");
+        descriptionLabel.classList.add("label");
+        descriptionLabel.textContent = "notes";
+        list.appendChild(descriptionLabel);
+        let descriptionText = document.createElement("p");
+        descriptionText.classList.add("details");
+        descriptionText.classList.add("description");
+        descriptionText.textContent = description;
+        list.appendChild(descriptionText);
+    }
 }
 
 function alarmDetails(y, m, d) {
@@ -204,7 +217,7 @@ function alarmDetails(y, m, d) {
     document.getElementById("detailsHeader").textContent = `${months[m]} ${d} ${y}`;
     for (let i = alarms[y][m][d].length; i > 0; i--) {
         let alarm = alarms[y][m][d][i - 1];
-        createDetails(new Date(alarm.timestamp), alarm.beepCount, alarms[y][m][d].length - i + 1);
+        createDetails(new Date(alarm.timestamp), alarm.beepCount, alarms[y][m][d].length - i + 1, alarm.description);
     }
 }
 
@@ -214,7 +227,7 @@ function countUpTimer() {
     let text = timespan.toLongString(true).split(' ');
     timer.innerHTML = "";
     let header = document.createElement("p");
-    header.textContent = "TIME SINCE LAST ALARM";
+    header.textContent = "ELAPSED TIME SINCE LAST ALARM";
     header.classList.add("heading");
     header.classList.add("half-width");
     timer.appendChild(header);
@@ -247,11 +260,11 @@ function longestTime() {
 
     let currentPeriod = new TimeSpan(Date.now(), dates[0]);
     let text;
-    if(differences[0].totalMilliseconds < currentPeriod.totalMilliseconds) {
-        text = currentPeriod.toLongString(true).split(' ');        
+    if (differences[0].totalMilliseconds < currentPeriod.totalMilliseconds) {
+        text = currentPeriod.toLongString(true).split(' ');
     }
     else {
-        text = differences[0].toLongString(true).split(' ');        
+        text = differences[0].toLongString(true).split(' ');
     }
 
     for (let i = 0; i < text.length; i++) {
@@ -269,6 +282,22 @@ function longestTime() {
     header.classList.add("half-width");
     timer.appendChild(header);
     text = differences[differences.length - 1].toLongString(true).split(' ');
+    for (let i = 0; i < text.length; i++) {
+        let p = document.createElement("p");
+        p.textContent = text[i];
+        p.classList.add(i % 2 === 0 ? "number" : "label");
+        timer.appendChild(p);
+    }
+
+    timer = document.getElementById("averageTime");
+    timer.innerHTML = "";
+    header = document.createElement("p");
+    header.textContent = "AVERAGE TIME BETWEEN ALARMS";
+    header.classList.add("heading");
+    header.classList.add("half-width");
+    timer.appendChild(header);
+    let sum = differences.reduce((x, y) => x + y.totalMilliseconds, 0);
+    text = new TimeSpan(sum / differences.length).toLongString(true).split(' ');
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
         p.textContent = text[i];

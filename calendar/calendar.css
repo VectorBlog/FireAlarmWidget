@@ -104,6 +104,10 @@ p.details {
     font-weight: bold;
 }
 
+p.description {
+    font-size: 16px;
+}
+
 p.heading {
     font-size: 32px;
     text-transform: uppercase;

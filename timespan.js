@@ -1,5 +1,5 @@
 function TimeSpan(recentTime, pastTime) {
-    let diff = recentTime - pastTime;
+    let diff = pastTime ? recentTime - pastTime : recentTime;
 
     this.totalMilliseconds = diff;
     this.milliseconds = this.totalMilliseconds % 1000;
