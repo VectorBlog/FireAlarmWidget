@@ -183,7 +183,7 @@ function createDetails(timestamp, beepCount, number, description) {
     time.classList.add("details");
 
     let pm = false;
-    if (timestamp.getHours() > 12) pm = true;
+    if (timestamp.getHours() >= 12) pm = true;
     let timeString = `${timestamp.getHours() % 12 === 0 ? 12 : timestamp.getHours() % 12}:${pad(timestamp.getMinutes())}:${pad(timestamp.getSeconds())} ${(pm ? "PM" : "AM")}`;
 
     time.textContent = timeString;
