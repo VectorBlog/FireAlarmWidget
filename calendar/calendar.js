@@ -22,7 +22,7 @@ function getFirstDayOfWeek(month, year) {
 
 document.body.onload = () => {
     getData(true);
-    setInterval(getData, 300000);
+    setInterval(getData, 60000);
 };
 
 function getData(first) {
