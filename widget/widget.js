@@ -1,7 +1,7 @@
 function onLoad() {
     loadData();
     blinkBackground();
-    setInterval(loadData, 60000);
+    setInterval(loadData, 30000);
 
     if (location.search.indexOf("embed") >= 0) {
         document.getElementById("infoLink").remove();
