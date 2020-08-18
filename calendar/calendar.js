@@ -8,6 +8,7 @@ var lastAlarmTimestamp;
 
 var tintInterval;
 
+var allAlarms = [];
 var alarms = [];
 var dates = [];
 var differences = [];
@@ -34,6 +35,7 @@ function getData(first) {
             fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches")
                 .then(response => response.json())
                 .then(alarmList => {
+                    allAlarms = alarmList;
                     alarms = [];
                     dates = [];
                     mostRecentAlarm = undefined;
@@ -217,7 +219,7 @@ function alarmDetails(y, m, d) {
     document.getElementById("detailsHeader").textContent = `${months[m]} ${d} ${y}`;
     for (let i = alarms[y][m][d].length; i > 0; i--) {
         let alarm = alarms[y][m][d][i - 1];
-        createDetails(new Date(alarm.timestamp), alarm.beepCount, alarms[y][m][d].length - i + 1, alarm.description);
+        createDetails(new Date(alarm.timestamp), alarm.beepCount, allAlarms.indexOf(alarm) + 1, alarm.description);
     }
 }
 
