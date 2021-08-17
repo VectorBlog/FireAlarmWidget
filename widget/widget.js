@@ -5,6 +5,7 @@ function onLoad() {
 
     if (location.search.indexOf("embed") >= 0) {
         document.getElementById("infoLink").remove();
+        document.getElementById("archiveNotice").remove();
     }
 };
 
@@ -23,7 +24,7 @@ function loadData() {
     timeUnitsDisplay = document.getElementById("timeSinceLastUnits");
     alarmCountDisplay = document.getElementById("alarmCount");
 
-    fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary")
+    fetch("../archive/summary.json")
         .then(response => response.json())
         .then(json => {
             clearInterval(updateInterval);

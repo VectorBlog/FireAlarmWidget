@@ -27,12 +27,12 @@ document.body.onload = () => {
 };
 
 function getData(first) {
-    fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/summary")
+    fetch("../archive/summary.json")
         .then(response => response.json())
         .then(json => {
             lastAlarmTimestamp = new Date(json.lastAlarmTimestamp);
 
-            fetch("https://associationfireaccountability.azurewebsites.net/api/frontend/location/1/batches")
+            fetch("../archive/batches.json")
                 .then(response => response.json())
                 .then(alarmList => {
                     allAlarms = alarmList;

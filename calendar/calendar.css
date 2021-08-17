@@ -131,3 +131,14 @@ p.number {
     margin-bottom: 0;
     line-height: 36px;
 }
+
+.notice-container {
+    background-color: #F84738;
+    padding: 0 !important;
+}
+
+.notice-message {
+    color: white;
+    font-size: 18px;
+    font-weight: normal;
+}
