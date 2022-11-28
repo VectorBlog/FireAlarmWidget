@@ -260,14 +260,9 @@ function longestTime() {
     header.classList.add("half-width");
     timer.appendChild(header);
 
-    let currentPeriod = new TimeSpan(Date.now(), dates[0]);
-    let text;
-    if (differences[0].totalMilliseconds < currentPeriod.totalMilliseconds) {
-        text = currentPeriod.toLongString(true).split(' ');
-    }
-    else {
-        text = differences[0].toLongString(true).split(' ');
-    }
+    // "last alarm to now" is no longer meaningful since device is offline
+    //let currentPeriod = new TimeSpan(Date.now(), dates[0]);
+    let text = differences[0].toLongString(true).split(' ');
 
     for (let i = 0; i < text.length; i++) {
         let p = document.createElement("p");
